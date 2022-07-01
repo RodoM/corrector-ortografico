@@ -20,6 +20,6 @@ char * readfile (const char *path, int *len);
  */
 void writefile (const char *path, const char *buf, int len);
 
-void obtener_palabras (const char *path);
+char **obtener_palabras(char *buf);
 
 #endif /** __UTILS_H__ */

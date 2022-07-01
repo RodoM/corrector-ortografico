@@ -8,7 +8,13 @@
 
 
 int main() {
-  obtener_palabras("prueba");
+  int len = 0;
+  char *buf = readfile("prueba", &len);
+  char **palabras = obtener_palabras(buf);
 
+  int i = 0;
+  while (palabras[i] != NULL)
+    printf("-> %s\n", palabras[i++]);
+  
   return 0;
 }

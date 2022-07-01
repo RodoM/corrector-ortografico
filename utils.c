@@ -37,7 +37,7 @@ char * readfile(const char *path, int *len) {
 			sz = sz * 2;
 			buf = realloc(buf, sz);
 		}
-		buf[i++] = c;
+		buf[i++] = tolower(c);
 	}
 
 	fclose(f);
@@ -59,21 +59,19 @@ void writefile(const char *path, const char *buf, int len) {
 	fclose(f);
 }
 
-void obtener_palabras (const char *path) {
-  //leo el archivo
-  int len = 0;
-  char *res = readfile(path, &len);
-
-  //paso todas las mayusculas a minusculas (ver si se puede hacer a la par de strtok)
-  for (int i = 0; i < len; i++) {
-    res[i] = tolower(res[i]);
-  }
-  
-  //obtengo cada palabra sin caracteres especiales
+char **obtener_palabras(char *buf) {
+	char **palabras = malloc(sizeof(char)*1024);
+	int index = 0;
+	//obtengo cada palabra sin caracteres especiales
   //falta guardarlas en un arr o tabla hash (VER)
-  char* token = strtok(res, " :;,.?!\n");
+  char* token = strtok(buf, " :;,.?!\n");
   while (token != NULL) {
-    printf("-> %s\n", token);
+		int lenPalabra = strlen(token);
+		palabras[index] = malloc(sizeof(char)*lenPalabra);
+		memcpy(palabras[index], token, lenPalabra);
+		index += 1;
     token = strtok(NULL, " :;,.?!\n");
   }
+
+	return palabras;
 }
