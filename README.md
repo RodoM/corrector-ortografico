@@ -7,7 +7,7 @@ El programa que se tendra que realizar, sera un corrector ortografico rudimentar
 ```
 make
 ```
-### Compresion
+### Ejecutar el programa
 ```
 ./main archivoEntrada archivoSalida
 ```
