@@ -1,16 +1,19 @@
 FLAGS = -g -Wall -Wextra -Werror -std=c99
 
-main: main.o utils.o tablahash.o
+main: main.o sugerencias.o tablahash.o slist.o
 	$(CC) -o $@ $^ $(FLAGS)
 
-main.o: main.c utils.h tablahash.h
+main.o: main.c sugerencias.h tablahash.h slist.h
 	$(CC) -c $< $(FLAGS)
 
-utils.o: utils.c utils.h
+sugerencias.o: sugerencias.c sugerencias.h tablahash.h
 	$(CC) -c $< $(FLAGS)
 
-tablahash.o: tablahash.c tablahash.h
-	$(CC) -c $< $(FLAGS)
+tablahash.o: tablahash.c tablahash.h slist.h
+	$(CC) -c $< $(FLAGS)	
+
+slist.o: slist.c slist.h
+	$(CC) -c $< $(FLAGS)	
 
 clean:
 	rm *.o
