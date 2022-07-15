@@ -1,5 +1,7 @@
 #include "slist.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 SList slist_crear() { 
   return NULL; 
@@ -20,15 +22,22 @@ int slist_vacia(SList lista) {
 
 SList slist_agregar_inicio(SList lista, char *dato) {
   SNodo *nuevoNodo = malloc(sizeof(SNodo));
-  nuevoNodo->dato = dato;
+  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato));
+  strcpy(nuevoNodo->dato, dato);
   nuevoNodo->sig = lista;
   return nuevoNodo;
 }
 
-void slist_eliminar (SList lista, int pos) {
+void slist_eliminar(SList lista, int pos) {
   SList nodo1 = lista;
   SList nodo2 = lista;
   for(int i = 0;i<pos-1;nodo1=nodo1->sig, i++);
   for(int i = 0;i<pos;nodo2=nodo2->sig, i++);
   nodo1->sig = nodo2->sig;
+}
+
+void slist_imprimir(SList lista) {
+  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
+    printf("dato: %s\n", nodo->dato);
+  }
 }

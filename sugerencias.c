@@ -8,7 +8,7 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
   FILE *archivo = fopen(nombreDiccionario, "r");
   assert(archivo != NULL);
 
-  int capacidadad = 5000; //Ver de que capacidad hacer la tabla
+  int capacidadad = 5; //Ver de que capacidad hacer la tabla
   TablaHash diccionario = tablahash_crear(capacidadad);
 
   char buff[25];

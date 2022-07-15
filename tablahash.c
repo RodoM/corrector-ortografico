@@ -44,9 +44,13 @@ TablaHash tablahash_crear(unsigned capacidad) {
   return tabla;
 }
 
-int tablahash_nelems(TablaHash tabla) { return tabla->numElems; }
+int tablahash_nelems(TablaHash tabla) {
+  return tabla->numElems;
+}
 
-int tablahash_capacidad(TablaHash tabla) { return tabla->capacidad; }
+int tablahash_capacidad(TablaHash tabla) {
+  return tabla->capacidad;
+}
 
 void tablahash_destruir(TablaHash tabla) {
   for (unsigned idx = 0; idx < tabla->capacidad; ++idx)
@@ -61,30 +65,24 @@ void tablahash_destruir(TablaHash tabla) {
 }
 
 void tablahash_insertar(TablaHash tabla, char *dato) {
-
+  // Si el indice de carga es mayor a 0.7 aumenta la capacidad al doble
   if (tabla->numElems / tabla->capacidad > 0.7) {
-    printf("Se redimensiono\n");
     tablahash_redimensionar(tabla);
   }
 
   unsigned idx = KRHash(dato) % tabla->capacidad;
 
+  // Si la casilla esta vacia coloca directamente la palabra
   if (tabla->elems[idx].dato == NULL) {
     tabla->numElems++;
-    tabla->elems[idx].dato = dato;
+    tabla->elems[idx].dato = malloc(sizeof(char)*strlen(dato));
+    strcpy(tabla->elems[idx].dato, dato);
     return;
   }
-
-  else if (strcmp(tabla->elems[idx].dato, dato) == 0) {
-    // free(tabla->elems[idx].dato); //arreglar el free
-    // tabla->elems[idx].dato = dato;
-    return;
-  }
-
-  else { //no esta entrando aca
-    printf("entro!\n");
-    slist_agregar_inicio(tabla->elems[idx].lista, dato);
+  // Si no esta vacia agrega la palabra a la lista de la casilla
+  else {
     tabla->numElems++;
+    tabla->elems[idx].lista = slist_agregar_inicio(tabla->elems[idx].lista, dato);
   }
 }
 
@@ -128,16 +126,32 @@ void tablahash_eliminar(TablaHash tabla, char *dato) {
   }
 }
 
-void tablahash_redimensionar(TablaHash tabla) {
+void tablahash_redimensionar(TablaHash tabla) { //No se copian los elementos dentro de las listas
   int viejaCapacidad = tabla->capacidad;
+  tabla->numElems = 0;
   tabla->capacidad = viejaCapacidad * 2;
   CasillaHash* viejoElems = tabla->elems;
   tabla->elems = malloc(sizeof(CasillaHash)*tabla->capacidad);
 
   for (int i = 0; i < viejaCapacidad; i++) {
-    if (viejoElems[i].dato != NULL)
+    if (viejoElems[i].dato != NULL) {
       tablahash_insertar(tabla, viejoElems[i].dato);
+      if (viejoElems[i].lista != NULL) {
+        for (SNodo *nodo = viejoElems[i].lista; nodo != NULL; nodo = nodo->sig)
+          tablahash_insertar(tabla, nodo->dato);
+      }
+    }
   }
 
   free(viejoElems);
+}
+
+void tablahash_imprimir(TablaHash tabla) {
+  for (unsigned int i = 0; i < tabla->capacidad; i++) {
+    printf("[%d]: %s\n", i, tabla->elems[i].dato);
+    if (tabla->elems[i].lista != NULL) {
+      for (SNodo *nodo = tabla->elems[i].lista; nodo != NULL; nodo = nodo->sig)
+        printf("[%d lista]: %s\n", i, nodo->dato);
+    }
+  }
 }

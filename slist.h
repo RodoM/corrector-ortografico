@@ -33,4 +33,6 @@ SList slist_agregar_inicio(SList lista, char *dato);
  */
 void slist_eliminar (SList lista, int pos);
 
+void slist_imprimir(SList lista);
+
 #endif /* __SLIST_H__ */
