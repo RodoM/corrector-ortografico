@@ -56,7 +56,8 @@ void tablahash_destruir(TablaHash tabla) {
   for (unsigned idx = 0; idx < tabla->capacidad; ++idx)
     if (tabla->elems[idx].dato != NULL) {
       free(tabla->elems[idx].dato);
-      slist_destruir(tabla->elems[idx].lista);
+      if (tabla->elems[idx].lista != NULL) 
+        slist_destruir(tabla->elems[idx].lista);
     }
 
   free(tabla->elems);
@@ -75,7 +76,7 @@ void tablahash_insertar(TablaHash tabla, char *dato) {
   // Si la casilla esta vacia coloca directamente la palabra
   if (tabla->elems[idx].dato == NULL) {
     tabla->numElems++;
-    tabla->elems[idx].dato = malloc(sizeof(char)*strlen(dato));
+    tabla->elems[idx].dato = malloc(sizeof(char)*strlen(dato) + 1);
     strcpy(tabla->elems[idx].dato, dato);
     return;
   }
@@ -86,22 +87,23 @@ void tablahash_insertar(TablaHash tabla, char *dato) {
   }
 }
 
-int tablahash_buscar(TablaHash tabla, char *dato) { //REVISAR
+int tablahash_buscar(TablaHash tabla, char *dato) {
+  int bandera = 0;
   unsigned idx = KRHash(dato) % tabla->capacidad;
 
   if (tabla->elems[idx].dato == NULL)
-    return 0;
+    bandera = 0;
 
   else if (strcmp(tabla->elems[idx].dato, dato) == 0)
-    return 1;
+    bandera = 1;
 
   else if (strcmp(tabla->elems[idx].dato, dato) != 0){
       for (SNodo *nodo = tabla->elems[idx].lista; nodo != NULL; nodo = nodo->sig){
-        if(strcmp(nodo->dato, dato) == 0) return 1;
+        if(strcmp(nodo->dato, dato) == 0) bandera = 1;
       }
   }
 
-  return 0;
+  return bandera;
 }
 
 void tablahash_eliminar(TablaHash tabla, char *dato) {
@@ -126,7 +128,7 @@ void tablahash_eliminar(TablaHash tabla, char *dato) {
   }
 }
 
-void tablahash_redimensionar(TablaHash tabla) { //No se copian los elementos dentro de las listas
+void tablahash_redimensionar(TablaHash tabla) {
   int viejaCapacidad = tabla->capacidad;
   tabla->numElems = 0;
   tabla->capacidad = viejaCapacidad * 2;

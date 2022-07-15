@@ -22,7 +22,7 @@ int slist_vacia(SList lista) {
 
 SList slist_agregar_inicio(SList lista, char *dato) {
   SNodo *nuevoNodo = malloc(sizeof(SNodo));
-  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato));
+  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato) + 1);
   strcpy(nuevoNodo->dato, dato);
   nuevoNodo->sig = lista;
   return nuevoNodo;
