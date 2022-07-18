@@ -14,14 +14,15 @@ int main() {
   // corregir_archivo("prueba", diccionario);
 
   SList cambiosActuales = slist_crear();
-  SList cambiosNuevos = slist_crear();
-  int cantSugerencias = 0;
+  // SList cambiosNuevos = slist_crear();
+  // int cantSugerencias = 0;
 
   cambiosActuales = slist_agregar_inicio(cambiosActuales, "abc");
+  cambiosActuales = slist_agregar_inicio(cambiosActuales, "123");
+  slist_imprimir(cambiosActuales);
+  printf("contiene? %d\n", slist_contiene(cambiosActuales, "123"));
 
-  tecnica_eliminar(cambiosActuales, &cambiosNuevos, cantSugerencias);
-
-  slist_imprimir(cambiosNuevos);
+  // tecnica_eliminar(cambiosActuales, &cambiosNuevos, cantSugerencias);
 
   // tablahash_destruir(diccionario);
   return 0;

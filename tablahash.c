@@ -87,7 +87,7 @@ void tablahash_insertar(TablaHash tabla, char *dato) {
   }
 }
 
-int tablahash_buscar(TablaHash tabla, char *dato) {
+int tablahash_contiene(TablaHash tabla, char *dato) {
   int bandera = 0;
   unsigned idx = KRHash(dato) % tabla->capacidad;
 

@@ -30,6 +30,10 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
   return diccionario;
 }
 
+// void generar_sugerencias(char *palabra, TablaHash diccionario, int linea, char *nombreArchivoSalida) {
+
+// }
+
 void corregir_archivo (char *nombreArchivoEntrada, TablaHash diccionario) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
   assert(archivoEntrada != NULL);
@@ -47,7 +51,7 @@ void corregir_archivo (char *nombreArchivoEntrada, TablaHash diccionario) {
       i = 0;
       //Chequeo si la palabra esta en el diccionario
       printf("palabra: %s | linea: %d | ", palabra, linea);
-      if (tablahash_buscar(diccionario, palabra) != 1) {
+      if (tablahash_contiene(diccionario, palabra) != 1) {
         //Si la palabra no esta busco sugerencias
         printf("No se encuentra en el diccionario\n");
       }

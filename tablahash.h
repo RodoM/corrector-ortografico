@@ -32,7 +32,7 @@ void tablahash_insertar(TablaHash tabla, char *dato);
  * Retorna el dato de la tabla que coincida con el dato dado, o NULL si el dato
  * buscado no se encuentra en la tabla.
  */
-int tablahash_buscar(TablaHash tabla, char *dato);
+int tablahash_contiene(TablaHash tabla, char *dato);
 
 /**
  * Elimina el dato de la tabla que coincida con el dato dado.

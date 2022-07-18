@@ -7,14 +7,14 @@
 #include "slist.h"
 #include "tablahash.h"
 
-void tecnica_intercambiar (SList cambiosActuales, SList *cambiosNuevos, int cantSugerencias);
+void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
-void tecnica_insertar (SList cambiosActuales, SList *cambiosNuevos, int cantSugerencias);
+void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
-void tecnica_eliminar (SList cambiosActuales, SList *cambiosNuevos, int cantSugerencias);
+void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
-void tecnica_reemplazar (SList cambiosActuales, SList *cambiosNuevos, int cantSugerencias);
+void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
-void tecnica_separar (SList cambiosActuales, SList *cambiosNuevos, int cantSugerencias);
+void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
 #endif /* __TECNICAS_H__ */

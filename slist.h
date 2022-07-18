@@ -35,4 +35,6 @@ void slist_eliminar (SList lista, int pos);
 
 void slist_imprimir(SList lista);
 
+int slist_contiene(SList lista, char *dato);
+
 #endif /* __SLIST_H__ */

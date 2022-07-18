@@ -41,3 +41,17 @@ void slist_imprimir(SList lista) {
     printf("dato: %s\n", nodo->dato);
   }
 }
+
+//corregir!
+int slist_contiene(SList lista, char *dato) {
+  int bandera = 0;
+  SList nodo = lista;
+  while (nodo->sig != NULL) {
+    printf("dato re loco: %s\n", nodo->dato);
+    if(nodo->dato == dato){
+      bandera = 1;
+    }
+    nodo = nodo->sig;
+  }
+  return bandera;
+}
