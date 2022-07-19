@@ -3,7 +3,9 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
+#include "slist.h"
 #include "tablahash.h"
+#include "tecnicas.h"
 
 TablaHash cargar_diccionario(char *nombreDiccionario) {
   FILE *archivo = fopen(nombreDiccionario, "r");
@@ -30,9 +32,42 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
   return diccionario;
 }
 
-// void generar_sugerencias(char *palabra, TablaHash diccionario, int linea, char *nombreArchivoSalida) {
+// void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, char *nombreArchivoSalida)
+void generar_sugerencias(char *palabra, int linea, TablaHash diccionario) {
+  int cantSugerencias = 0;
+  int pasos = 0;
 
-// }
+  SList sugerencias = slist_crear();
+  SList cambiosActuales = slist_crear();
+  SList cambiosNuevos = slist_crear();
+
+  cambiosActuales = slist_agregar_inicio(cambiosActuales, palabra);
+
+  while (cantSugerencias < 5 && pasos < 2) {
+    tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    // tecnica_separar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+
+    pasos++;
+    slist_destruir(cambiosActuales);
+    cambiosActuales = cambiosNuevos;
+    cambiosNuevos = slist_crear();
+  }
+
+  slist_destruir(cambiosActuales);
+  slist_destruir(cambiosNuevos);
+
+  printf("LINEA %d, PALABRA '%s', QUISISTE DECIR?:\n", linea, palabra);
+  slist_imprimir(sugerencias);
+
+  //generar archivo de salida
+
+  if (sugerencias != NULL)
+    slist_destruir(sugerencias);
+
+}
 
 void corregir_archivo (char *nombreArchivoEntrada, TablaHash diccionario) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");

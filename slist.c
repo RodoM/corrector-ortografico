@@ -38,20 +38,16 @@ void slist_eliminar(SList lista, int pos) {
 
 void slist_imprimir(SList lista) {
   for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
-    printf("dato: %s\n", nodo->dato);
+    printf("%s, ", nodo->dato);
   }
+  puts("");
 }
 
-//corregir!
 int slist_contiene(SList lista, char *dato) {
   int bandera = 0;
-  SList nodo = lista;
-  while (nodo->sig != NULL) {
-    printf("dato re loco: %s\n", nodo->dato);
-    if(nodo->dato == dato){
+  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
+    if (strcmp(nodo->dato, dato) == 0)
       bandera = 1;
-    }
-    nodo = nodo->sig;
   }
   return bandera;
 }

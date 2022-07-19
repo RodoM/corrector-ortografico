@@ -6,24 +6,12 @@
 #include "sugerencias.h"
 
 int main() {
-  // TablaHash diccionario = cargar_diccionario("diccionario.txt");
-  // printf("El numero de casilleros es de: %d\n", tablahash_capacidad(diccionario));
-  // printf("El numero de elementos es de: %d\n", tablahash_nelems(diccionario)); //El numero de palabras en el diccionario es de: 620891
-  // tablahash_imprimir(diccionario);
+  TablaHash diccionario = cargar_diccionario("diccionario.txt");
+  printf("El numero de casilleros es de: %d\n", tablahash_capacidad(diccionario));
+  printf("El numero de elementos es de: %d\n", tablahash_nelems(diccionario)); //El numero de palabras en el diccionario es de: 620891
 
-  // corregir_archivo("prueba", diccionario);
+  generar_sugerencias("veso", 2, diccionario);
 
-  SList cambiosActuales = slist_crear();
-  // SList cambiosNuevos = slist_crear();
-  // int cantSugerencias = 0;
-
-  cambiosActuales = slist_agregar_inicio(cambiosActuales, "abc");
-  cambiosActuales = slist_agregar_inicio(cambiosActuales, "123");
-  slist_imprimir(cambiosActuales);
-  printf("contiene? %d\n", slist_contiene(cambiosActuales, "123"));
-
-  // tecnica_eliminar(cambiosActuales, &cambiosNuevos, cantSugerencias);
-
-  // tablahash_destruir(diccionario);
+  tablahash_destruir(diccionario);
   return 0;
 }

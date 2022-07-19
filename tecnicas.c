@@ -113,7 +113,7 @@ void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *cambi
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
 
-    for (int i = 1; i < lenSugerencia; i++) {
+    for (int i = 1; i < lenSugerencia && *cantSugerencias < 5; i++) {
       strncpy(sugerencia, nodo->dato, i);
       sugerencia[i] = '\0';
       strcpy(sugerencia2, nodo->dato + i);
