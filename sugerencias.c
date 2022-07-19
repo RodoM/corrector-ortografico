@@ -32,8 +32,17 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
   return diccionario;
 }
 
-// void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, char *nombreArchivoSalida)
-void generar_sugerencias(char *palabra, int linea, TablaHash diccionario) {
+void generar_salida (char *palabra, int linea, SList sugerencias, FILE *archivoSalida) {
+  fprintf(archivoSalida, "LINEA %d, '%s' no esta en el diccionario.\nQuizas quiso decir: ", linea, palabra);
+  for (SNodo *nodo = sugerencias; nodo != NULL; nodo = nodo->sig){
+    if (nodo->sig == NULL)
+      fprintf(archivoSalida, "%s.\n\n", nodo->dato);
+    else
+      fprintf(archivoSalida, "%s, ", nodo->dato);
+  }
+}
+
+void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *archivoSalida) {
   int cantSugerencias = 0;
   int pasos = 0;
 
@@ -43,7 +52,7 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario) {
 
   cambiosActuales = slist_agregar_inicio(cambiosActuales, palabra);
 
-  while (cantSugerencias < 5 && pasos < 2) {
+  while (pasos < 2) {
     tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
@@ -59,19 +68,20 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario) {
   slist_destruir(cambiosActuales);
   slist_destruir(cambiosNuevos);
 
-  printf("LINEA %d, PALABRA '%s', QUISISTE DECIR?:\n", linea, palabra);
-  slist_imprimir(sugerencias);
+  if (pasos >= 2 && cantSugerencias == 0)
+    printf("No se encontraron sugerencias para '%s'\n", palabra);
 
-  //generar archivo de salida
+  generar_salida(palabra, linea, sugerencias, archivoSalida);
 
   if (sugerencias != NULL)
     slist_destruir(sugerencias);
 
 }
 
-void corregir_archivo (char *nombreArchivoEntrada, TablaHash diccionario) {
+void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, TablaHash diccionario) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
-  assert(archivoEntrada != NULL);
+  FILE *archivoSalida = fopen(nombreArchivoSalida, "w");
+  assert(archivoEntrada != NULL && archivoSalida != NULL);
 
   char charBuff, palabra[80];
   for (int i = 0, linea = 1; (charBuff = fgetc(archivoEntrada)) != EOF;) {
@@ -85,17 +95,14 @@ void corregir_archivo (char *nombreArchivoEntrada, TablaHash diccionario) {
       palabra[i] = '\0';
       i = 0;
       //Chequeo si la palabra esta en el diccionario
-      printf("palabra: %s | linea: %d | ", palabra, linea);
       if (tablahash_contiene(diccionario, palabra) != 1) {
-        //Si la palabra no esta busco sugerencias
-        printf("No se encuentra en el diccionario\n");
+        generar_sugerencias(palabra, linea, diccionario, archivoSalida);
       }
-      else 
-        printf("Se encuentra en el diccionario\n");
     }
     if (charBuff == '\n')
       linea++;
   }
   
   fclose(archivoEntrada);
+  fclose(archivoSalida);
 }
