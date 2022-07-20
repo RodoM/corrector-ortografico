@@ -135,6 +135,11 @@ void tablahash_redimensionar(TablaHash tabla) {
   CasillaHash* viejoElems = tabla->elems;
   tabla->elems = malloc(sizeof(CasillaHash)*tabla->capacidad);
 
+  for (unsigned idx = 0; idx < tabla->capacidad; ++idx) {
+    tabla->elems[idx].dato = NULL;
+    tabla->elems[idx].lista = NULL;
+  }
+
   for (int i = 0; i < viejaCapacidad; i++) {
     if (viejoElems[i].dato != NULL) {
       tablahash_insertar(tabla, viejoElems[i].dato);

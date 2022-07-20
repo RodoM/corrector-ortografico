@@ -19,11 +19,6 @@ SList slist_crear();
 void slist_destruir(SList lista);
 
 /**
- * Determina si la lista es vacía.
- */
-int slist_vacia(SList lista);
-
-/**
  * Agrega un elemento al inicio de la lista.
  */
 SList slist_agregar_inicio(SList lista, char *dato);

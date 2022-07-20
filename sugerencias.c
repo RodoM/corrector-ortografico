@@ -74,7 +74,6 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
 
   if (sugerencias != NULL)
     slist_destruir(sugerencias);
-
 }
 
 void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, TablaHash diccionario) {

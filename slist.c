@@ -12,12 +12,9 @@ void slist_destruir(SList lista) {
   while (lista != NULL) {
     nodoAEliminar = lista;
     lista = lista->sig;
+    free(nodoAEliminar->dato);
     free(nodoAEliminar);
   }
-}
-
-int slist_vacia(SList lista) {
-  return (lista == NULL);
 }
 
 SList slist_agregar_inicio(SList lista, char *dato) {
