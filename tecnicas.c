@@ -14,6 +14,7 @@ void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *
         charSugerencia = sugerencia[i];
         sugerencia[i] = sugerencia[i + 1];
         sugerencia[i + 1] = charSugerencia;
+        // VER SI NO HACE FALTA CHEQUEAR SI LA SUGERENCIA YA ESTA EN LA LISTA
         *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia);
         if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
           *sugerencias = slist_agregar_inicio(*sugerencias, sugerencia);
@@ -43,6 +44,7 @@ void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *camb
     for (int i = 0; i < lenSugerencia + 1; i++) {
       for (int j = 0; j < 26; j++) {
         sugerencia[i] = abecedario[j];
+        // VER SI NO HACE FALTA CHEQUEAR SI LA SUGERENCIA YA ESTA EN LA LISTA
         *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia);
         if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
           *sugerencias = slist_agregar_inicio(*sugerencias, sugerencia);
@@ -69,6 +71,7 @@ void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *camb
       for (int j = i; j < lenSugerencia; j++) {
         sugerencia[j] = sugerencia[j + 1];
       }
+      // VER SI NO HACE FALTA CHEQUEAR SI LA SUGERENCIA YA ESTA EN LA LISTA
       *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia);
       if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
         *sugerencias = slist_agregar_inicio(*sugerencias, sugerencia);
@@ -94,6 +97,7 @@ void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *ca
       for (int j = 0; j < 26; j++) {
         if (sugerencia[i] != abecedario[j]) {
           sugerencia[i] = abecedario[j];
+          // VER SI NO HACE FALTA CHEQUEAR SI LA SUGERENCIA YA ESTA EN LA LISTA
           *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia);
           if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
             *sugerencias = slist_agregar_inicio(*sugerencias, sugerencia);
@@ -118,6 +122,7 @@ void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *cambi
       sugerencia[i] = '\0';
       strcpy(sugerencia2, nodo->dato + i);
       // solo se aplica si al separar la palabra conseguimos dos palabras que ya estan en el diccionario, y no admite pasos posteriores.
+      // VER SI NO HACE FALTA CHEQUEAR SI LA SUGERENCIA YA ESTA EN LA LISTA
       *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia);
       *cambiosNuevos = slist_agregar_inicio(*cambiosNuevos, sugerencia2);
       // ver cuando agregar a sugerencias

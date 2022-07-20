@@ -68,8 +68,7 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   slist_destruir(cambiosActuales);
   slist_destruir(cambiosNuevos);
 
-  if (pasos >= 2 && cantSugerencias == 0)
-    printf("No se encontraron sugerencias para '%s'\n", palabra);
+  // Ver si se deben manejar las palabras sin sugerencias.
 
   generar_salida(palabra, linea, sugerencias, archivoSalida);
 
