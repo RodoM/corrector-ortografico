@@ -121,13 +121,10 @@ void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *suger
       strncpy(sugerencia, nodo->dato, i);
       sugerencia[i] = '\0';
       strcpy(sugerencia2, nodo->dato + i);
-      if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
+      if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia) && tablahash_contiene(diccionario, sugerencia2) && !slist_contiene(*sugerencias, sugerencia2)) {
         *sugerencias = slist_agregar_final(*sugerencias, sugerencia);
-        *cantSugerencias += 1;
-      }
-      if (tablahash_contiene(diccionario, sugerencia2) && !slist_contiene(*sugerencias, sugerencia2)) {
         *sugerencias = slist_agregar_final(*sugerencias, sugerencia2);
-        *cantSugerencias += 1;
+        *cantSugerencias += 2;
       }
     }
   }
