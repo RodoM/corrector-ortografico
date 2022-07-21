@@ -23,6 +23,8 @@ void slist_destruir(SList lista);
  */
 SList slist_agregar_inicio(SList lista, char *dato);
 
+SList slist_agregar_final(SList lista, char *dato);
+
 /**
  * Elimina el elemento en la posicion dada.
  */

@@ -25,6 +25,22 @@ SList slist_agregar_inicio(SList lista, char *dato) {
   return nuevoNodo;
 }
 
+SList slist_agregar_final(SList lista, char *dato) {
+  SNodo *nuevoNodo = malloc(sizeof(SNodo));
+  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato) + 1);
+  strcpy(nuevoNodo->dato, dato);
+  nuevoNodo->sig = NULL;
+
+  if (lista == NULL)
+    return nuevoNodo;
+
+  SList nodo = lista;
+  for (;nodo->sig != NULL;nodo = nodo->sig);
+
+  nodo->sig = nuevoNodo;
+  return lista;
+}
+
 void slist_eliminar(SList lista, int pos) {
   SList nodo1 = lista;
   SList nodo2 = lista;

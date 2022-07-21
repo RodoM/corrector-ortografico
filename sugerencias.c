@@ -50,14 +50,14 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   SList cambiosActuales = slist_crear();
   SList cambiosNuevos = slist_crear();
 
-  cambiosActuales = slist_agregar_inicio(cambiosActuales, palabra);
-
+  cambiosActuales = slist_agregar_final(cambiosActuales, palabra);
+  // PASOS < 3
   while (pasos < 2) {
     tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
-    // tecnica_separar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    tecnica_separar(diccionario, cambiosActuales, &sugerencias, &cantSugerencias);
 
     pasos++;
     slist_destruir(cambiosActuales);

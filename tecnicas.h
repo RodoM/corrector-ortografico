@@ -15,6 +15,6 @@ void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *camb
 
 void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
 
-void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias);
+void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *sugerencias, int *cantSugerencias);
 
 #endif /* __TECNICAS_H__ */

@@ -121,7 +121,7 @@ void tablahash_eliminar(TablaHash tabla, char *dato) {
 
   else{
     int i = 0;
-    for (SNodo *nodo = tabla->elems[idx].lista; nodo != NULL; nodo = nodo->sig){
+    for (SNodo *nodo = tabla->elems[idx].lista; nodo != NULL; nodo = nodo->sig) {
       if(strcmp(nodo->dato, dato) == 0) slist_eliminar(tabla->elems[idx].lista, i);
       i++;
     }
@@ -148,6 +148,8 @@ void tablahash_redimensionar(TablaHash tabla) {
           tablahash_insertar(tabla, nodo->dato);
       }
     }
+    slist_destruir(viejoElems[i].lista);
+    free(viejoElems[i].dato);
   }
 
   free(viejoElems);
