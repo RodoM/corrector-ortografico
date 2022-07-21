@@ -52,7 +52,7 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
 
   cambiosActuales = slist_agregar_final(cambiosActuales, palabra);
   // PASOS < 3
-  while (pasos < 2) {
+  while (pasos < 3 && cantSugerencias < 5) {
     tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
