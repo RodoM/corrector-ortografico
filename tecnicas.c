@@ -1,6 +1,13 @@
 #include "tecnicas.h"
 
 // n-1 sugerencias
+/**
+ * Toma una lista de cambios y a cada palabra se le intercambian las letras adyacentes
+ * para generar nuevas sugerencias, cada una de estas nuevas sugerencias son agregadas
+ * en una nueva lista que sera utilizada en el siguiente paso, si alguna de estas
+ * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
+ * lista de sugerencias validas.
+ */
 void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
   char charSugerencia;
@@ -28,6 +35,13 @@ void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *
 }
 
 // (n+1)*26 sugerencias
+/**
+ * Toma una lista de cambios y a cada palabra se le inserta una letra del abecedario en 
+ * cada posicion de la palabra (al principio, entre medio, al final) para generar nuevas
+ * sugerencias, cada una de estas nuevas sugerencias son agregadas en una nueva lista que
+ * sera utilizada en el siguiente paso, si alguna de estas sugerencias pertenece al
+ * diccionario y no fue previamente agregada, se agrega a la lista de sugerencias validas.
+ */
 void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
   char abecedario[] = "abcdefghijklmnopqrstuvwxyz";
@@ -56,6 +70,13 @@ void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *camb
 }
 
 // n sugerencias
+/**
+ * Toma una lista de cambios y a cada palabra se le elimina una letra para generar
+ * nuevas sugerencias, cada una de estas nuevas sugerencias son agregadas en una
+ * nueva lista que sera utilizada en el siguiente paso, si alguna de estas
+ * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
+ * lista de sugerencias validas.
+ */
 void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
 
@@ -79,6 +100,13 @@ void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *camb
 }
 
 // n*26 sugerencias
+/**
+ * Toma una lista de cambios y a cada palabra se le reemplaza una letra por una del 
+ * abecedario para generar nuevas sugerencias, cada una de estas nuevas sugerencias
+ * son agregadas en una nueva lista que sera utilizada en el siguiente paso, si
+ * alguna de estas sugerencias pertenece al diccionario y no fue previamente agregada,
+ * se agrega a la lista de sugerencias validas.
+ */
 void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
   char charSugerencia;
@@ -107,6 +135,12 @@ void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *ca
 }
 
 // n-1 sugerencias
+/**
+ * Toma una lista de cambios y a cada palabra se la separa en dos para generar
+ * nuevas sugerencias, no admite pasos posteriores, si alguna de estas sugerencias
+ * pertenece al diccionario y no fue previamente agregada, se agrega a la lista de
+ * sugerencias validas.
+ */
 void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
 

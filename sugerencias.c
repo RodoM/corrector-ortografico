@@ -1,5 +1,8 @@
 #include "sugerencias.h"
 
+/**
+ * Carga el diccionaro provisto por la catedra en una tabla hash.
+ */
 TablaHash cargar_diccionario(char *nombreDiccionario) {
   FILE *archivo = fopen(nombreDiccionario, "r");
   assert(archivo != NULL);
@@ -24,6 +27,10 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
   return diccionario;
 }
 
+/**
+ * Escribe el archivo de salida con la palabra no perteneciente al diccionario, su linea
+ * y las 5 sugerencias.
+ */
 void generar_salida (char *palabra, int linea, SList sugerencias, FILE *archivoSalida) {
   fprintf(archivoSalida, "LINEA %d, '%s' no esta en el diccionario.\nQuizas quiso decir: ", linea, palabra);
   for (SNodo *nodo = sugerencias; nodo != NULL; nodo = nodo->sig){
@@ -34,6 +41,10 @@ void generar_salida (char *palabra, int linea, SList sugerencias, FILE *archivoS
   }
 }
 
+/**
+ * Genera sugerencias con las 5 tecnicas dadas para las palabras que no pertenecen al
+ * diccionario, con un maximo de 3 pasos y 5 sugerencias por palabra.
+ */
 void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *archivoSalida) {
   int cantSugerencias = 0;
   int pasos = 0;
@@ -67,6 +78,10 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
     slist_destruir(sugerencias);
 }
 
+/**
+ * Se lee el archivo de entrada donde se chequea cada palabra y las que no pertenecen
+ * al diccionario son manejadas por la funcion generar_sugerencias.
+ */
 void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
   FILE *archivoSalida = fopen(nombreArchivoSalida, "w");
