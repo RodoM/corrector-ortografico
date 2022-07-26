@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
-#include <ctype.h>
-#include "slist.h"
-#include "tablahash.h"
-#include "tecnicas.h"
+#include "sugerencias.h"
 
 TablaHash cargar_diccionario(char *nombreDiccionario) {
   FILE *archivo = fopen(nombreDiccionario, "r");
@@ -19,7 +12,6 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
 
   while (fgets(buff, 25, archivo) != NULL) {
     lenBuff = strlen(buff);
-    //Borro el salto de linea
     if (buff[lenBuff - 1] == '\n') {
       buff[lenBuff - 1] = '\0';
       lenBuff--;
@@ -75,10 +67,12 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
     slist_destruir(sugerencias);
 }
 
-void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, TablaHash diccionario) {
+void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
   FILE *archivoSalida = fopen(nombreArchivoSalida, "w");
   assert(archivoEntrada != NULL && archivoSalida != NULL);
+
+  TablaHash diccionario = cargar_diccionario("diccionario.txt");
 
   char charBuff, palabra[80];
   for (int i = 0, linea = 1; (charBuff = fgetc(archivoEntrada)) != EOF;) {
@@ -88,10 +82,9 @@ void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, Ta
         i++;
       }
     }
-    else if (i > 0) { //Verifico que i sea mayor a 0, es decir, que contenga una palabra para agregarle \0 al final
+    else if (i > 0) {
       palabra[i] = '\0';
       i = 0;
-      //Chequeo si la palabra esta en el diccionario
       if (tablahash_contiene(diccionario, palabra) != 1) {
         generar_sugerencias(palabra, linea, diccionario, archivoSalida);
       }
@@ -102,4 +95,5 @@ void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, Ta
   
   fclose(archivoEntrada);
   fclose(archivoSalida);
+  tablahash_destruir(diccionario);
 }

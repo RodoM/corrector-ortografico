@@ -1,8 +1,14 @@
 #ifndef __SUGERENCIAS_H__
 #define __SUGERENCIAS_H__
 
-TablaHash cargar_diccionario(char *nombreDiccionario);
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <ctype.h>
+#include "slist.h"
+#include "tablahash.h"
+#include "tecnicas.h"
 
-void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida, TablaHash diccionario);
+void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida);
 
 #endif /** __SUGERENCIAS_H__ */

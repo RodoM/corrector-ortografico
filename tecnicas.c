@@ -1,11 +1,13 @@
 #include "tecnicas.h"
 
+// n-1 sugerencias
 void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
-  char charSugerencia, sugerencia[80];
+  char charSugerencia;
 
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
+    char sugerencia[lenSugerencia];
     strcpy(sugerencia, nodo->dato);
 
     for (int i = 0; i < lenSugerencia - 1 && *cantSugerencias < 5; i++) {
@@ -25,13 +27,14 @@ void tecnica_intercambiar (TablaHash diccionario, SList cambiosActuales, SList *
   }
 }
 
+// (n+1)*26 sugerencias
 void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
-  char sugerencia[80];
   char abecedario[] = "abcdefghijklmnopqrstuvwxyz";
 
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
+    char sugerencia[lenSugerencia];
     strcpy(sugerencia, nodo->dato);
 
     for (int i = lenSugerencia + 1; i > 0; i--) {
@@ -49,17 +52,16 @@ void tecnica_insertar (TablaHash diccionario, SList cambiosActuales, SList *camb
       }
       sugerencia[i] = sugerencia[i + 1];
     }
-    
-    
   }
 }
 
+// n sugerencias
 void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
-  char sugerencia[80];
 
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
+    char sugerencia[lenSugerencia];
     strcpy(sugerencia, nodo->dato);
 
     for (int i = 0; i < lenSugerencia && *cantSugerencias < 5; i++) {
@@ -76,13 +78,15 @@ void tecnica_eliminar (TablaHash diccionario, SList cambiosActuales, SList *camb
   }
 }
 
+// n*26 sugerencias
 void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
-  char charSugerencia, sugerencia[80];
+  char charSugerencia;
   char abecedario[] = "abcdefghijklmnopqrstuvwxyz";
 
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
+    char sugerencia[lenSugerencia];
     strcpy(sugerencia, nodo->dato);
 
     for (int i = 0; i < lenSugerencia && *cantSugerencias < 5; i++) {
@@ -102,12 +106,14 @@ void tecnica_reemplazar (TablaHash diccionario, SList cambiosActuales, SList *ca
   }
 }
 
+// n-1 sugerencias
 void tecnica_separar (TablaHash diccionario, SList cambiosActuales, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
-  char sugerencia[80], sugerencia2[40];
 
   for (SNodo *nodo = cambiosActuales; nodo != NULL && *cantSugerencias < 5; nodo = nodo->sig) {
     lenSugerencia = strlen(nodo->dato);
+    char sugerencia[lenSugerencia];
+    char sugerencia2[lenSugerencia / 2];
 
     for (int i = 1; i < lenSugerencia && *cantSugerencias < 5; i++) {
       strncpy(sugerencia, nodo->dato, i);

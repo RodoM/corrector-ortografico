@@ -1,6 +1,12 @@
 #ifndef __TABLAHASH_H__
 #define __TABLAHASH_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+#include "slist.h"
+
 typedef struct _TablaHash *TablaHash;
 
 /**
@@ -9,11 +15,13 @@ typedef struct _TablaHash *TablaHash;
 TablaHash tablahash_crear(unsigned capacidad);
 
 /**
+ * Despues borrar
  * Retorna el numero de elementos de la tabla.
  */
 int tablahash_nelems(TablaHash tabla);
 
 /**
+ * Despues borrar
  * Retorna la capacidad de la tabla.
  */
 int tablahash_capacidad(TablaHash tabla);
@@ -44,6 +52,7 @@ void tablahash_eliminar(TablaHash tabla, char *dato);
  */
 void tablahash_redimensionar(TablaHash tabla);
 
+//Despues borrar
 void tablahash_imprimir(TablaHash tabla);
 
 #endif /* __TABLAHASH_H__ */

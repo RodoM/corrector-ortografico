@@ -1,7 +1,4 @@
 #include "slist.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 SList slist_crear() { 
   return NULL; 
@@ -49,13 +46,6 @@ void slist_eliminar(SList lista, int pos) {
   nodo1->sig = nodo2->sig;
 }
 
-void slist_imprimir(SList lista) {
-  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
-    printf("%s, ", nodo->dato);
-  }
-  puts("");
-}
-
 int slist_contiene(SList lista, char *dato) {
   int bandera = 0;
   for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
@@ -63,4 +53,20 @@ int slist_contiene(SList lista, char *dato) {
       bandera = 1;
   }
   return bandera;
+}
+
+//despues borrar
+void slist_imprimir(SList lista) {
+  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
+    printf("%s, ", nodo->dato);
+  }
+  puts("");
+}
+
+//despues borrar
+int slist_longitud(SList lista) {
+  int contador = 0;
+  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig)
+    ++contador;
+  return contador;
 }

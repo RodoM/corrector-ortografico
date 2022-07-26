@@ -1,10 +1,4 @@
 #include "tablahash.h"
-#include "slist.h"
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-
 typedef struct {
   char *dato;
   SList lista;
@@ -44,10 +38,12 @@ TablaHash tablahash_crear(unsigned capacidad) {
   return tabla;
 }
 
+//Despues borrar
 int tablahash_nelems(TablaHash tabla) {
   return tabla->numElems;
 }
 
+//Despues borrar
 int tablahash_capacidad(TablaHash tabla) {
   return tabla->capacidad;
 }
@@ -155,6 +151,7 @@ void tablahash_redimensionar(TablaHash tabla) {
   free(viejoElems);
 }
 
+//Despues borrar
 void tablahash_imprimir(TablaHash tabla) {
   for (unsigned int i = 0; i < tabla->capacidad; i++) {
     printf("[%d]: %s\n", i, tabla->elems[i].dato);
