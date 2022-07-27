@@ -54,17 +54,12 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   TablaHash cambiosNuevos = tablahash_crear(10);
 
   tablahash_insertar(cambiosActuales, palabra);
-  printf("PALABRA: %s\n", palabra);
   while (pasos < 3 && cantSugerencias < 5) {
-    printf("PASO %d CAMBIOS ACTUALES = %d\n", pasos, tablahash_nelems(cambiosActuales));
-    
     tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
     tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
     tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
     tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
     tecnica_separar(diccionario, cambiosActuales, &sugerencias, &cantSugerencias);
-
-    printf("PASO %d CAMBIOS NUEVOS = %d\n", pasos, tablahash_nelems(cambiosNuevos));
 
     pasos++;
     tablahash_destruir(cambiosActuales);
