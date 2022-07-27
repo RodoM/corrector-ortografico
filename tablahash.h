@@ -7,6 +7,17 @@
 #include <string.h>
 #include "slist.h"
 
+typedef struct {
+  char *dato;
+  SList lista;
+} CasillaHash;
+
+struct _TablaHash {
+  CasillaHash *elems;
+  unsigned numElems;
+  unsigned capacidad;
+};
+
 typedef struct _TablaHash *TablaHash;
 
 /**

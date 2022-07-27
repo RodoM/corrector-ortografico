@@ -50,25 +50,30 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   int pasos = 0;
 
   SList sugerencias = slist_crear();
-  SList cambiosActuales = slist_crear();
-  SList cambiosNuevos = slist_crear();
+  TablaHash cambiosActuales = tablahash_crear(1);
+  TablaHash cambiosNuevos = tablahash_crear(10);
 
-  cambiosActuales = slist_agregar_final(cambiosActuales, palabra);
+  tablahash_insertar(cambiosActuales, palabra);
+  printf("PALABRA: %s\n", palabra);
   while (pasos < 3 && cantSugerencias < 5) {
+    printf("PASO %d CAMBIOS ACTUALES = %d\n", pasos, tablahash_nelems(cambiosActuales));
+    
     tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
     tecnica_separar(diccionario, cambiosActuales, &sugerencias, &cantSugerencias);
 
+    printf("PASO %d CAMBIOS NUEVOS = %d\n", pasos, tablahash_nelems(cambiosNuevos));
+
     pasos++;
-    slist_destruir(cambiosActuales);
+    tablahash_destruir(cambiosActuales);
     cambiosActuales = cambiosNuevos;
-    cambiosNuevos = slist_crear();
+    cambiosNuevos = tablahash_crear(10);
   }
 
-  slist_destruir(cambiosActuales);
-  slist_destruir(cambiosNuevos);
+  tablahash_destruir(cambiosActuales);
+  tablahash_destruir(cambiosNuevos);
 
   // Ver si se deben manejar las palabras sin sugerencias.
 

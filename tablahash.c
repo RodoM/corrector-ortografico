@@ -1,14 +1,4 @@
 #include "tablahash.h"
-typedef struct {
-  char *dato;
-  SList lista;
-} CasillaHash;
-
-struct _TablaHash {
-  CasillaHash *elems;
-  unsigned numElems;
-  unsigned capacidad;
-};
 
 /**
  * Funcion de hash para strings propuesta por Kernighan & Ritchie en "The C
@@ -161,3 +151,15 @@ void tablahash_imprimir(TablaHash tabla) {
     }
   }
 }
+
+// void tablahash_recorrer(TablaHash tabla) {
+//   for (unsigned int i = 0; i < tabla->capacidad; i++) {
+//     if (tabla->elems[i].dato != NULL) {
+//       if (tabla->elems[i].lista != NULL) {
+//         for (SNodo *nodo = tabla->elems[i].lista; nodo != NULL; nodo = nodo->sig) {
+          
+//         }
+//       }
+//     }
+//   }
+// }
