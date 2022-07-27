@@ -1,8 +1,9 @@
 #include "tecnicas.h"
 
-void validar_sugerencia(char *sugerencia, TablaHash diccionario, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
+void validar_sugerencia(char *sugerencia, TablaHash diccionario, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   if (!tablahash_contiene(*cambiosNuevos, sugerencia)) {
-    tablahash_insertar(*cambiosNuevos, sugerencia);
+    if (pasos < 2)
+      tablahash_insertar(*cambiosNuevos, sugerencia);
     if (tablahash_contiene(diccionario, sugerencia) && !slist_contiene(*sugerencias, sugerencia)) {
       *sugerencias = slist_agregar_final(*sugerencias, sugerencia);
       *cantSugerencias += 1;
@@ -18,7 +19,7 @@ void validar_sugerencia(char *sugerencia, TablaHash diccionario, TablaHash *camb
  * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
  * lista de sugerencias validas.
  */
-void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
+void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char charSugerencia, sugerencia[60];
 
@@ -33,7 +34,7 @@ void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, Tab
           sugerencia[j] = sugerencia[j + 1];
           sugerencia[j + 1] = charSugerencia;
           
-          validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+          validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
 
           sugerencia[j + 1] = sugerencia[j];
           sugerencia[j] = charSugerencia;
@@ -51,7 +52,7 @@ void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, Tab
               sugerencia[j] = sugerencia[j + 1];
               sugerencia[j + 1] = charSugerencia;
               
-              validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+              validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
 
               sugerencia[j + 1] = sugerencia[j];
               sugerencia[j] = charSugerencia;
@@ -71,7 +72,7 @@ void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, Tab
  * sera utilizada en el siguiente paso, si alguna de estas sugerencias pertenece al
  * diccionario y no fue previamente agregada, se agrega a la lista de sugerencias validas.
  */
-void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
+void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char sugerencia[60];
   char abecedario[] = "abcdefghijklmnopqrstuvwxyz";
@@ -87,7 +88,7 @@ void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
       for (int j = 0; j < lenSugerencia + 1 && *cantSugerencias < 5; j++) {
         for (int k = 0; k < 26 && *cantSugerencias < 5; k++) {
           sugerencia[j] = abecedario[k];
-          validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+          validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
         }
         sugerencia[j] = sugerencia[j + 1];
       }
@@ -103,7 +104,7 @@ void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
           for (int j = 0; j < lenSugerencia + 1 && *cantSugerencias < 5; j++) {
             for (int k = 0; k < 26 && *cantSugerencias < 5; k++) {
               sugerencia[j] = abecedario[k];
-              validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+              validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
             }
             sugerencia[j] = sugerencia[j + 1];
           }
@@ -121,7 +122,7 @@ void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
  * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
  * lista de sugerencias validas.
  */
-void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
+void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char sugerencia[60];
   for (unsigned int i = 0; i < cambiosActuales->capacidad && *cantSugerencias < 5; i++) {
@@ -132,7 +133,7 @@ void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
         for (int k = j; k < lenSugerencia && *cantSugerencias < 5; k++) {
           sugerencia[k] = sugerencia[k + 1];
         }
-        validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+        validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
         strcpy(sugerencia, cambiosActuales->elems[i].dato);
       }
 
@@ -144,7 +145,7 @@ void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
             for (int k = j; k < lenSugerencia && *cantSugerencias < 5; k++) {
               sugerencia[k] = sugerencia[k + 1];
             }
-            validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+            validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
             strcpy(sugerencia, nodo->dato);
           }
         }
@@ -161,7 +162,7 @@ void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
  * alguna de estas sugerencias pertenece al diccionario y no fue previamente agregada,
  * se agrega a la lista de sugerencias validas.
  */
-void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias) {
+void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char charSugerencia, sugerencia[60];;
   char abecedario[] = "abcdefghijklmnopqrstuvwxyz";
@@ -176,7 +177,7 @@ void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, Tabla
         for (int k = 0; k < 26 && *cantSugerencias < 5; k++) {
           if (sugerencia[j] != abecedario[k]) {
             sugerencia[j] = abecedario[k];
-            validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+            validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
             sugerencia[j] = charSugerencia;
           }
         }
@@ -192,7 +193,7 @@ void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, Tabla
             for (int k = 0; k < 26 && *cantSugerencias < 5; k++) {
               if (sugerencia[j] != abecedario[k]) {
                 sugerencia[j] = abecedario[k];
-                validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias);
+                validar_sugerencia(sugerencia, diccionario, cambiosNuevos, sugerencias, cantSugerencias, pasos);
                 sugerencia[j] = charSugerencia;
               }
             }

@@ -58,10 +58,10 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   while (pasos < 3 && cantSugerencias < 5) {
     printf("PASO %d CAMBIOS ACTUALES = %d\n", pasos, tablahash_nelems(cambiosActuales));
     
-    tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
-    tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
-    tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
-    tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias);
+    tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
+    tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
+    tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
+    tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
     tecnica_separar(diccionario, cambiosActuales, &sugerencias, &cantSugerencias);
 
     printf("PASO %d CAMBIOS NUEVOS = %d\n", pasos, tablahash_nelems(cambiosNuevos));
@@ -76,8 +76,8 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   tablahash_destruir(cambiosNuevos);
 
   // Ver si se deben manejar las palabras sin sugerencias.
-
-  generar_salida(palabra, linea, sugerencias, archivoSalida);
+  if (cantSugerencias == 5)
+    generar_salida(palabra, linea, sugerencias, archivoSalida);
 
   if (sugerencias != NULL)
     slist_destruir(sugerencias);
