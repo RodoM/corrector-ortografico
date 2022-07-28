@@ -26,18 +26,6 @@ typedef struct _TablaHash *TablaHash;
 TablaHash tablahash_crear(unsigned capacidad);
 
 /**
- * Despues borrar
- * Retorna el numero de elementos de la tabla.
- */
-int tablahash_nelems(TablaHash tabla);
-
-/**
- * Despues borrar
- * Retorna la capacidad de la tabla.
- */
-int tablahash_capacidad(TablaHash tabla);
-
-/**
  * Destruye la tabla.
  */
 void tablahash_destruir(TablaHash tabla);
@@ -62,8 +50,5 @@ void tablahash_eliminar(TablaHash tabla, char *dato);
  * Redimensiona el tamaño de la tabla * 2.
  */
 void tablahash_redimensionar(TablaHash tabla);
-
-//Despues borrar
-void tablahash_imprimir(TablaHash tabla);
 
 #endif /* __TABLAHASH_H__ */

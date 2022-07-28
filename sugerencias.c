@@ -70,7 +70,6 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   tablahash_destruir(cambiosActuales);
   tablahash_destruir(cambiosNuevos);
 
-  // Ver si se deben manejar las palabras sin sugerencias.
   if (cantSugerencias == 5)
     generar_salida(palabra, linea, sugerencias, archivoSalida);
 
@@ -78,10 +77,6 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
     slist_destruir(sugerencias);
 }
 
-/**
- * Se lee el archivo de entrada donde se chequea cada palabra y las que no pertenecen
- * al diccionario son manejadas por la funcion generar_sugerencias.
- */
 void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
   FILE *archivoSalida = fopen(nombreArchivoSalida, "w");

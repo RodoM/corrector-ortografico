@@ -34,16 +34,11 @@ SList slist_agregar_final(SList lista, char *dato);
 /**
  * Elimina el elemento en la posicion dada.
  */
-void slist_eliminar (SList lista, int pos);
+void slist_eliminar(SList lista, int pos);
 
 /**
  * Chequea si un elemento dado esta en la lista o no.
  */
 int slist_contiene(SList lista, char *dato);
 
-//despues borrar
-void slist_imprimir(SList lista);
-//despues borrar
-int slist_longitud(SList lista);
-
-#endif /* __SLIST_H__ */
+#endif                          /* __SLIST_H__ */

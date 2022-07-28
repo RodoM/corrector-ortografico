@@ -1,7 +1,7 @@
 #include "slist.h"
 
-SList slist_crear() { 
-  return NULL; 
+SList slist_crear() {
+  return NULL;
 }
 
 void slist_destruir(SList lista) {
@@ -16,7 +16,7 @@ void slist_destruir(SList lista) {
 
 SList slist_agregar_inicio(SList lista, char *dato) {
   SNodo *nuevoNodo = malloc(sizeof(SNodo));
-  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato) + 1);
+  nuevoNodo->dato = malloc(sizeof(char) * strlen(dato) + 1);
   strcpy(nuevoNodo->dato, dato);
   nuevoNodo->sig = lista;
   return nuevoNodo;
@@ -24,7 +24,7 @@ SList slist_agregar_inicio(SList lista, char *dato) {
 
 SList slist_agregar_final(SList lista, char *dato) {
   SNodo *nuevoNodo = malloc(sizeof(SNodo));
-  nuevoNodo->dato = malloc(sizeof(char)*strlen(dato) + 1);
+  nuevoNodo->dato = malloc(sizeof(char) * strlen(dato) + 1);
   strcpy(nuevoNodo->dato, dato);
   nuevoNodo->sig = NULL;
 
@@ -32,7 +32,7 @@ SList slist_agregar_final(SList lista, char *dato) {
     return nuevoNodo;
 
   SList nodo = lista;
-  for (;nodo->sig != NULL;nodo = nodo->sig);
+  for (; nodo->sig != NULL; nodo = nodo->sig);
 
   nodo->sig = nuevoNodo;
   return lista;
@@ -41,32 +41,16 @@ SList slist_agregar_final(SList lista, char *dato) {
 void slist_eliminar(SList lista, int pos) {
   SList nodo1 = lista;
   SList nodo2 = lista;
-  for(int i = 0;i<pos-1;nodo1=nodo1->sig, i++);
-  for(int i = 0;i<pos;nodo2=nodo2->sig, i++);
+  for (int i = 0; i < pos - 1; nodo1 = nodo1->sig, i++);
+  for (int i = 0; i < pos; nodo2 = nodo2->sig, i++);
   nodo1->sig = nodo2->sig;
 }
 
 int slist_contiene(SList lista, char *dato) {
   int bandera = 0;
-  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
+  for (SNodo * nodo = lista; nodo != NULL; nodo = nodo->sig) {
     if (strcmp(nodo->dato, dato) == 0)
       bandera = 1;
   }
   return bandera;
-}
-
-//despues borrar
-void slist_imprimir(SList lista) {
-  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig){
-    printf("%s, ", nodo->dato);
-  }
-  puts("");
-}
-
-//despues borrar
-int slist_longitud(SList lista) {
-  int contador = 0;
-  for (SNodo *nodo = lista; nodo != NULL; nodo = nodo->sig)
-    ++contador;
-  return contador;
 }

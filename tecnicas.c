@@ -1,5 +1,10 @@
 #include "tecnicas.h"
 
+/**
+ * Chequea de que la sugerencia no sea repetida, en caso de no serlo y que no sea el ultimo paso, la agrega a la tabla de cambios
+ * que se usara en el siguiente paso, si ademas pertenece al diccionario y no fue previamente agregada
+ * se agrega a la lista de sugerencias validas.
+ */
 void validar_sugerencia(char *sugerencia, TablaHash diccionario, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   if (!tablahash_contiene(*cambiosNuevos, sugerencia)) {
     if (pasos < 2)
@@ -11,14 +16,6 @@ void validar_sugerencia(char *sugerencia, TablaHash diccionario, TablaHash *camb
   }
 }
 
-// n-1 sugerencias
-/**
- * Toma una lista de cambios y a cada palabra se le intercambian las letras adyacentes
- * para generar nuevas sugerencias, cada una de estas nuevas sugerencias son agregadas
- * en una nueva lista que sera utilizada en el siguiente paso, si alguna de estas
- * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
- * lista de sugerencias validas.
- */
 void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char charSugerencia, sugerencia[60];
@@ -64,14 +61,6 @@ void tecnica_intercambiar (TablaHash diccionario, TablaHash cambiosActuales, Tab
   }
 }
 
-// (n+1)*26 sugerencias
-/**
- * Toma una lista de cambios y a cada palabra se le inserta una letra del abecedario en 
- * cada posicion de la palabra (al principio, entre medio, al final) para generar nuevas
- * sugerencias, cada una de estas nuevas sugerencias son agregadas en una nueva lista que
- * sera utilizada en el siguiente paso, si alguna de estas sugerencias pertenece al
- * diccionario y no fue previamente agregada, se agrega a la lista de sugerencias validas.
- */
 void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char sugerencia[60];
@@ -114,14 +103,6 @@ void tecnica_insertar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
   }
 }
 
-// n sugerencias
-/**
- * Toma una lista de cambios y a cada palabra se le elimina una letra para generar
- * nuevas sugerencias, cada una de estas nuevas sugerencias son agregadas en una
- * nueva lista que sera utilizada en el siguiente paso, si alguna de estas
- * sugerencias pertenece al diccionario y no fue previamente agregada, se agrega a la
- * lista de sugerencias validas.
- */
 void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char sugerencia[60];
@@ -154,14 +135,6 @@ void tecnica_eliminar (TablaHash diccionario, TablaHash cambiosActuales, TablaHa
   }
 }
 
-// n*26 sugerencias
-/**
- * Toma una lista de cambios y a cada palabra se le reemplaza una letra por una del 
- * abecedario para generar nuevas sugerencias, cada una de estas nuevas sugerencias
- * son agregadas en una nueva lista que sera utilizada en el siguiente paso, si
- * alguna de estas sugerencias pertenece al diccionario y no fue previamente agregada,
- * se agrega a la lista de sugerencias validas.
- */
 void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, TablaHash *cambiosNuevos, SList *sugerencias, int *cantSugerencias, int pasos) {
   int lenSugerencia;
   char charSugerencia, sugerencia[60];;
@@ -204,13 +177,6 @@ void tecnica_reemplazar (TablaHash diccionario, TablaHash cambiosActuales, Tabla
   }
 }
 
-// n-1 sugerencias
-/**
- * Toma una lista de cambios y a cada palabra se la separa en dos para generar
- * nuevas sugerencias, no admite pasos posteriores, si alguna de estas sugerencias
- * pertenece al diccionario y no fue previamente agregada, se agrega a la lista de
- * sugerencias validas.
- */
 void tecnica_separar (TablaHash diccionario, TablaHash cambiosActuales, SList *sugerencias, int *cantSugerencias) {
   int lenSugerencia;
   char sugerencia[60], sugerencia2[30];

@@ -28,16 +28,6 @@ TablaHash tablahash_crear(unsigned capacidad) {
   return tabla;
 }
 
-//Despues borrar
-int tablahash_nelems(TablaHash tabla) {
-  return tabla->numElems;
-}
-
-//Despues borrar
-int tablahash_capacidad(TablaHash tabla) {
-  return tabla->capacidad;
-}
-
 void tablahash_destruir(TablaHash tabla) {
   for (unsigned idx = 0; idx < tabla->capacidad; ++idx)
     if (tabla->elems[idx].dato != NULL) {
@@ -140,26 +130,3 @@ void tablahash_redimensionar(TablaHash tabla) {
 
   free(viejoElems);
 }
-
-//Despues borrar
-void tablahash_imprimir(TablaHash tabla) {
-  for (unsigned int i = 0; i < tabla->capacidad; i++) {
-    printf("[%d]: %s\n", i, tabla->elems[i].dato);
-    if (tabla->elems[i].lista != NULL) {
-      for (SNodo *nodo = tabla->elems[i].lista; nodo != NULL; nodo = nodo->sig)
-        printf("[%d lista]: %s\n", i, nodo->dato);
-    }
-  }
-}
-
-// void tablahash_recorrer(TablaHash tabla) {
-//   for (unsigned int i = 0; i < tabla->capacidad; i++) {
-//     if (tabla->elems[i].dato != NULL) {
-//       if (tabla->elems[i].lista != NULL) {
-//         for (SNodo *nodo = tabla->elems[i].lista; nodo != NULL; nodo = nodo->sig) {
-          
-//         }
-//       }
-//     }
-//   }
-// }
