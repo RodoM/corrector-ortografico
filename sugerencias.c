@@ -19,11 +19,11 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
       buff[lenBuff - 1] = '\0';
       lenBuff--;
     }
+
     tablahash_insertar(diccionario, buff);
   }
 
   fclose(archivo);
-
   return diccionario;
 }
 
@@ -31,11 +31,15 @@ TablaHash cargar_diccionario(char *nombreDiccionario) {
  * Escribe el archivo de salida con la palabra no perteneciente al diccionario, su linea
  * y las 5 sugerencias.
  */
-void generar_salida (char *palabra, int linea, SList sugerencias, FILE *archivoSalida) {
-  fprintf(archivoSalida, "LINEA %d, '%s' no esta en el diccionario.\nQuizas quiso decir: ", linea, palabra);
-  for (SNodo *nodo = sugerencias; nodo != NULL; nodo = nodo->sig){
+void generar_salida(char *palabra, int linea, SList sugerencias,
+                    FILE * archivoSalida) {
+  fprintf(archivoSalida,
+          "LINEA %d, '%s' no esta en el diccionario.\nQuizas quiso decir: ",
+          linea, palabra);
+  for (SNodo * nodo = sugerencias; nodo != NULL; nodo = nodo->sig) {
     if (nodo->sig == NULL)
       fprintf(archivoSalida, "%s.\n\n", nodo->dato);
+      
     else
       fprintf(archivoSalida, "%s, ", nodo->dato);
   }
@@ -45,7 +49,8 @@ void generar_salida (char *palabra, int linea, SList sugerencias, FILE *archivoS
  * Genera sugerencias con las 5 tecnicas dadas para las palabras que no pertenecen al
  * diccionario, con un maximo de 3 pasos y 5 sugerencias por palabra.
  */
-void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *archivoSalida) {
+void generar_sugerencias(char *palabra, int linea, TablaHash diccionario,
+                         FILE * archivoSalida) {
   int cantSugerencias = 0;
   int pasos = 0;
 
@@ -55,11 +60,16 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
 
   tablahash_insertar(cambiosActuales, palabra);
   while (pasos < 3 && cantSugerencias < 5) {
-    tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
-    tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
-    tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
-    tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias, &cantSugerencias, pasos);
-    tecnica_separar(diccionario, cambiosActuales, &sugerencias, &cantSugerencias);
+    tecnica_intercambiar(diccionario, cambiosActuales, &cambiosNuevos,
+                         &sugerencias, &cantSugerencias, pasos);
+    tecnica_insertar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias,
+                     &cantSugerencias, pasos);
+    tecnica_eliminar(diccionario, cambiosActuales, &cambiosNuevos, &sugerencias,
+                     &cantSugerencias, pasos);
+    tecnica_reemplazar(diccionario, cambiosActuales, &cambiosNuevos,
+                       &sugerencias, &cantSugerencias, pasos);
+    tecnica_separar(diccionario, cambiosActuales, &sugerencias,
+                    &cantSugerencias);
 
     pasos++;
     tablahash_destruir(cambiosActuales);
@@ -70,14 +80,14 @@ void generar_sugerencias(char *palabra, int linea, TablaHash diccionario, FILE *
   tablahash_destruir(cambiosActuales);
   tablahash_destruir(cambiosNuevos);
 
-  if (cantSugerencias == 5)
+  if (cantSugerencias > 0)
     generar_salida(palabra, linea, sugerencias, archivoSalida);
 
   if (sugerencias != NULL)
     slist_destruir(sugerencias);
 }
 
-void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
+void corregir_archivo(char *nombreArchivoEntrada, char *nombreArchivoSalida) {
   FILE *archivoEntrada = fopen(nombreArchivoEntrada, "r");
   FILE *archivoSalida = fopen(nombreArchivoSalida, "w");
   assert(archivoEntrada != NULL && archivoSalida != NULL);
@@ -87,11 +97,13 @@ void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
   char charBuff, palabra[80];
   for (int i = 0, linea = 1; (charBuff = fgetc(archivoEntrada)) != EOF;) {
     if (charBuff != ' ' && charBuff != '\n') {
-      if (charBuff != ':' && charBuff != ';' && charBuff != ',' && charBuff != '.' && charBuff != '?' && charBuff != '!') {
+      if (charBuff != ':' && charBuff != ';' && charBuff != ','
+          && charBuff != '.' && charBuff != '?' && charBuff != '!') {
         palabra[i] = tolower(charBuff);
         i++;
       }
     }
+    
     else if (i > 0) {
       palabra[i] = '\0';
       i = 0;
@@ -99,10 +111,11 @@ void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida) {
         generar_sugerencias(palabra, linea, diccionario, archivoSalida);
       }
     }
+
     if (charBuff == '\n')
       linea++;
   }
-  
+
   fclose(archivoEntrada);
   fclose(archivoSalida);
   tablahash_destruir(diccionario);

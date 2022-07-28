@@ -51,4 +51,4 @@ void tablahash_eliminar(TablaHash tabla, char *dato);
  */
 void tablahash_redimensionar(TablaHash tabla);
 
-#endif /* __TABLAHASH_H__ */
+#endif                          /* __TABLAHASH_H__ */

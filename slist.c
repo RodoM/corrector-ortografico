@@ -52,5 +52,6 @@ int slist_contiene(SList lista, char *dato) {
     if (strcmp(nodo->dato, dato) == 0)
       bandera = 1;
   }
+  
   return bandera;
 }

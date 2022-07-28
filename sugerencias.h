@@ -13,6 +13,6 @@
  * Se lee el archivo de entrada donde se chequea cada palabra y las que no pertenecen
  * al diccionario son manejadas por la funcion generar_sugerencias.
  */
-void corregir_archivo (char *nombreArchivoEntrada, char *nombreArchivoSalida);
+void corregir_archivo(char *nombreArchivoEntrada, char *nombreArchivoSalida);
 
 #endif /** __SUGERENCIAS_H__ */
