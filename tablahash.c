@@ -72,10 +72,8 @@ int tablahash_contiene(TablaHash tabla, char *dato) {
     bandera = 1;
 
   else if (strcmp(tabla->elems[idx].dato, dato) != 0) {
-    for (SNodo * nodo = tabla->elems[idx].lista; nodo != NULL; nodo = nodo->sig) {
-      if (strcmp(nodo->dato, dato) == 0)
-        bandera = 1;
-    }
+    bandera = slist_contiene(tabla->elems[idx].lista, dato);
+    return bandera;
   }
 
   return bandera;

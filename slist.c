@@ -49,8 +49,10 @@ void slist_eliminar(SList lista, int pos) {
 int slist_contiene(SList lista, char *dato) {
   int bandera = 0;
   for (SNodo * nodo = lista; nodo != NULL; nodo = nodo->sig) {
-    if (strcmp(nodo->dato, dato) == 0)
+    if (strcmp(nodo->dato, dato) == 0) {
       bandera = 1;
+      return bandera;
+    }
   }
   
   return bandera;
